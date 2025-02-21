@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface ResponsiveIframeProps {
 	src: string;
@@ -15,83 +15,68 @@ export default function ResponsiveIframe({
 }: ResponsiveIframeProps) {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const iframeRef = useRef<HTMLIFrameElement>(null);
-	const [scale, setScale] = useState(1);
-	const [dimensions, setDimensions] = useState({
-		width: initialWidth,
-		height: initialHeight,
-	});
 
 	useEffect(() => {
-		const handleResize = () => {
-			if (wrapperRef.current && iframeRef.current) {
-				const wrapperWidth = wrapperRef.current.offsetWidth;
-				const wrapperHeight = wrapperRef.current.offsetHeight;
+		const wrapper = wrapperRef.current;
+		const iframe = iframeRef.current;
 
-				// Get actual iframe dimensions
-				const iframeWidth = dimensions.width;
-				const iframeHeight = dimensions.height;
+		if (!wrapper || !iframe) return;
 
-				// Calculate scale ratios for both dimensions
-				const wScale = wrapperWidth / iframeWidth;
-				const hScale = wrapperHeight / iframeHeight;
+		const iframeScaler = () => {
+			// Get wrapper dimensions
+			const wrapWidth = wrapper.offsetWidth;
+			const wrapHeight = wrapper.offsetHeight;
 
-				// Use the smaller scale to maintain aspect ratio
-				const newScale = Math.min(wScale, hScale, 1); // Don't scale up beyond original size
-				setScale(newScale);
-			}
+			// Get iframe dimensions
+			const childWidth = iframe.offsetWidth || initialWidth;
+			const childHeight = iframe.offsetHeight || initialHeight;
+
+			// Calculate scale ratios
+			const wScale = wrapWidth / childWidth;
+			const hScale = wrapHeight / childHeight;
+
+			// Use the smallest ratio
+			const scale = Math.min(wScale, hScale, 1);
+
+			// Apply transform
+			iframe.style.transform = `scale(${scale})`;
+			iframe.style.transformOrigin = "top left";
+
+			// Update wrapper height to match scaled content
+			wrapper.style.height = `${childHeight * scale}px`;
 		};
 
-		// Handle iframe load to get actual dimensions
-		const handleIframeLoad = () => {
-			if (iframeRef.current) {
-				const width = iframeRef.current.offsetWidth;
-				const height = iframeRef.current.offsetHeight;
-				setDimensions({ width, height });
-			}
-		};
+		// Run on mount and resize
+		iframeScaler();
+		window.addEventListener("resize", iframeScaler);
 
-		handleResize(); // Initial calculation
-		window.addEventListener("resize", handleResize);
-
-		if (iframeRef.current) {
-			iframeRef.current.addEventListener("load", handleIframeLoad);
-		}
+		// Also run when iframe loads
+		iframe.addEventListener("load", iframeScaler);
 
 		return () => {
-			window.removeEventListener("resize", handleResize);
-			if (iframeRef.current) {
-				iframeRef.current.removeEventListener("load", handleIframeLoad);
-			}
+			window.removeEventListener("resize", iframeScaler);
+			iframe.removeEventListener("load", iframeScaler);
 		};
-	}, [dimensions]);
+	}, [initialWidth, initialHeight]);
 
 	return (
 		<div
 			ref={wrapperRef}
 			style={{
 				width: "100%",
-				height: dimensions.height * scale,
 				overflow: "hidden",
 			}}
 		>
-			<div
+			<iframe
+				ref={iframeRef}
+				src={src}
+				width={initialWidth}
+				height={initialHeight}
 				style={{
-					transform: `scale(${scale})`,
+					border: "none",
 					transformOrigin: "top left",
-					width: dimensions.width,
-					height: dimensions.height,
 				}}
-			>
-				<iframe
-					ref={iframeRef}
-					src={src}
-					width={dimensions.width}
-					height={dimensions.height}
-					style={{
-						border: "none",
-					}}
-				/>
-			</div>
+			/>
 		</div>
 	);
 }
