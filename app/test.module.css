@@ -2,20 +2,13 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  /* Minimum height to prevent collapse */
-  min-height: 500px;
+  padding: 20px;
 }
 
 .iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
+  height: 800px;
   border: 0;
-  transform-origin: 0 0;
 }
 
 /* Desktop and large tablets */
@@ -59,5 +52,12 @@
     width: 400%;
     transform: scale(0.25);
     height: 3200px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .iframe {
+    transform: scale(calc(100vw / 800));
+    height: calc(100vh * (800 / 100vw));
   }
 } 
