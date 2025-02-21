@@ -10,7 +10,7 @@
 
 @media only screen and (max-width: 790px) {
   .iframe {
-    width: 1405px;
+    width: 1405vw;
     height: 3200px;
     transform: scale(calc(100vw/1405));
     transform-origin: 0 0;
