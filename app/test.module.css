@@ -1,8 +1,4 @@
-:root {
-  --iframe-mobile-width: 396;  /* as a multiplier of vw */
-  --iframe-mobile-height: 3200px;
-  --iframe-breakpoint: 790px;
-}
+
 
 .iframeContainer {
   width: 100%;
