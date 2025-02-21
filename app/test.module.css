@@ -1,21 +1,18 @@
 .iframeContainer {
   width: 100%;
-  overflow: hidden;
 }
 
 .iframe {
   width: 100%;
   height: 1000px;
   border: 0;
-  transform: scale(1);
-  transform-origin: 0 0;
 }
 
 @media only screen and (max-width: 790px) {
   .iframe {
     width: 1405px;
     height: 3200px;
-    transform: scale(calc(100vw / 1405));
+    transform: scale(calc(100vw/1405));
     transform-origin: 0 0;
   }
-} 
+}
