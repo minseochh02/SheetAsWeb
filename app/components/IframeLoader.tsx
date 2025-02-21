@@ -11,7 +11,7 @@ interface IframeLoaderProps {
 export default function IframeLoader({
 	src,
 	width = 1405,
-	height = 826,
+	height = 3000,
 }: IframeLoaderProps) {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const iframeRef = useRef<HTMLIFrameElement>(null);
