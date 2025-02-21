@@ -1,63 +1,21 @@
 .iframeContainer {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  overflow: hidden;
 }
 
 .iframe {
   width: 100%;
-  height: 800px;
+  height: 1000px;
   border: 0;
+  transform: scale(1);
+  transform-origin: 0 0;
 }
 
-/* Desktop and large tablets */
-@media screen and (min-width: 1024px) {
+@media only screen and (max-width: 790px) {
   .iframe {
-    transform: scale(1);
-    height: 800px;
-  }
-}
-
-/* Medium tablets */
-@media screen and (max-width: 1023px) {
-  .iframe {
-    width: 150%;
-    transform: scale(0.67);
-    height: 1200px;
-  }
-}
-
-/* Small tablets */
-@media screen and (max-width: 768px) {
-  .iframe {
-    width: 200%;
-    transform: scale(0.5);
-    height: 1600px;
-  }
-}
-
-/* Large phones */
-@media screen and (max-width: 480px) {
-  .iframe {
-    width: 300%;
-    transform: scale(0.33);
-    height: 2400px;
-  }
-}
-
-/* Small phones */
-@media screen and (max-width: 380px) {
-  .iframe {
-    width: 400%;
-    transform: scale(0.25);
+    width: 375vw;  /* Accommodates 1405px width */
     height: 3200px;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .iframe {
-    transform: scale(calc(100vw / 800));
-    height: calc(100vh * (800 / 100vw));
+    transform: scale(calc(1/3.75));  /* Precise scale for 1405px content */
+    transform-origin: 0 0;
   }
 } 
