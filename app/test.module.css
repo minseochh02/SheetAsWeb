@@ -1,3 +1,9 @@
+:root {
+  --iframe-mobile-width: 396;  /* as a multiplier of vw */
+  --iframe-mobile-height: 3200px;
+  --iframe-breakpoint: 790px;
+}
+
 .iframeContainer {
   width: 100%;
 }
@@ -8,11 +14,11 @@
   border: 0;
 }
 
-@media only screen and (max-width: 790px) {
+@media only screen and (max-width: var(--iframe-breakpoint)) {
   .iframe {
-    width: 396vw;
-    height: 3200px;
-    transform: scale(0.25);
+    width: calc(var(--iframe-mobile-width) * 1vw);
+    height: var(--iframe-mobile-height);
+    transform: scale(calc(100/var(--iframe-mobile-width)));
     transform-origin: 0 0;
   }
 } 

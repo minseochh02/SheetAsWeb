@@ -1,8 +1,14 @@
 import styles from "./test.module.css";
 
 export default function Home() {
+	const cssVariables = {
+		"--iframe-mobile-width": "396",
+		"--iframe-mobile-height": "3200px",
+		"--iframe-breakpoint": "790px",
+	} as React.CSSProperties;
+
 	return (
-		<div className={styles.iframeContainer}>
+		<div className={styles.iframeContainer} style={cssVariables}>
 			<h1>Test Page</h1>
 			<iframe
 				className={styles.iframe}
