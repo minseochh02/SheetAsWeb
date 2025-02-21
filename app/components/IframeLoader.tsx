@@ -2,6 +2,13 @@
 
 import React, { useEffect, useRef } from "react";
 import Script from "next/script";
+import jQuery from "jquery";
+
+declare global {
+	interface Window {
+		jQuery: typeof jQuery;
+	}
+}
 
 // Extend Window interface to include jQuery
 declare global {
