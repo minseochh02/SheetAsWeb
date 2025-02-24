@@ -81,7 +81,11 @@ export default function IframeLoader({
 	const refresh = () => {
 		setIsRefreshing(true);
 		if (iframeRef.current) {
-			iframeRef.current.src = iframeRef.current.src;
+			// ${src}${src.includes('?') ? '&' : '?'}t=${Date.now()}
+			let src = iframeRef.current.src;
+			iframeRef.current.src = `${src}${
+				src.includes("?") ? "&" : "?"
+			}t=${Date.now()}`;
 		}
 		setTimeout(() => {
 			setIsRefreshing(false);
